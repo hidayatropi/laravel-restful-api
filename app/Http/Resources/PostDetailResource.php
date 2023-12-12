@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class PostDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,6 +19,8 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'news_content' => $this->news_content,
             'created_at'   => date('Y-m-d', strtotime($this->created_at)),
+            'author_id'    => $this->author_id,
+            'writer'       => $this->whenLoaded('getWriter'),
         ];
     }
 }
