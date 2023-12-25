@@ -20,10 +20,16 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('posts', [PostController::class, 'index'])->middleware(['auth:sanctum']);
-Route::get('posts/{id}', [PostController::class, 'showNewsAndWriter'])->middleware(['auth:sanctum']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('logout', [AuthenticationController::class, 'logout']);
+    Route::get('me', [AuthenticationController::class, 'me']);
+    Route::post('posts', [PostController::class, 'store']);
+    Route::patch('posts/{id}', [PostController::class, 'update']);
+    Route::delete('posts/{id}', [PostController::class, 'destroy']);
+});
+
+Route::get('posts', [PostController::class, 'index']);
+Route::get('posts/{id}', [PostController::class, 'showNewsAndWriter']);
 Route::get('postsnew/{id}', [PostController::class, 'showNews']);
 
 Route::post('login', [AuthenticationController::class, 'login']);
-Route::get('logout', [AuthenticationController::class, 'logout'])->middleware(['auth:sanctum']);
-Route::get('me', [AuthenticationController::class, 'me'])->middleware(['auth:sanctum']);
