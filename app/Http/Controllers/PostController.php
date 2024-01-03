@@ -15,7 +15,7 @@ class PostController extends Controller
     {
         $posts = Post::all();
         // return response()->json(['data' => $posts]);
-        return PostResource::collection($posts);
+        return PostDetailResource::collection($posts->loadMissing(['getWriter:id,username', 'comments:id,post_id,user_id,comments']));
     }
 
     public function showNewsAndWriter($id)
