@@ -25,7 +25,9 @@ class AuthenticationController extends Controller
             ]);
         }
 
-        return $user->createToken($request->password)->plainTextToken;
+        $token = $user->createToken($request->password)->plainTextToken;
+        $response = ['token' => $token];
+        return response()->json(['data'=> $response]);
     }
 
     public function logout(Request $request)
